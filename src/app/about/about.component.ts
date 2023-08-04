@@ -25,7 +25,6 @@ export class AboutComponent {
       this.data = response as Anime[];
       this.dataWithIndex = this.data.map((anime, index) => ({ ...anime, index: index + 1 }));
       this.initializeTable(this.dataWithIndex);
-      console.log(this.dataWithIndex);
     });
   }
 
