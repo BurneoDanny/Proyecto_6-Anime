@@ -4,6 +4,7 @@ import { ServiceService } from '../providers/service.service';
 
 import DataTable from 'datatables.net-dt';
 import 'datatables.net-bs5';
+import Chart from 'chart.js/auto';
 
 //import * as $ from 'jquery';
 //import 'bootstrap-table'; // Importa BootstrapTable
@@ -23,8 +24,41 @@ export class AboutComponent {
   ngOnInit() {
     this.dataProvider.getResponse().subscribe((response) => {
       this.data = response as Anime[];
-      this.dataWithIndex = this.data.map((anime, index) => ({ ...anime, index: index + 1 }));
+      this.dataWithIndex = this.data.map((anime, index) => ({
+        ...anime,
+        index: index + 1,
+      }));
       this.initializeTable(this.dataWithIndex);
+      this.initializeGraphs(this.dataWithIndex);
+    });
+  }
+
+  private initializeGraphs(data: Anime[]) {
+
+    // Top 10 Votes Graph
+
+    const top10Vote = data.slice().sort((a, b) => b.votes - a.votes).slice(0, 10);
+    const data_mostVotes = {
+      labels: top10Vote.map((row) => row.anime),
+      datasets: [
+        {
+          label: 'Top 10 con mas votos',
+          data: top10Vote.map((row) => row.votes),
+          backgroundColor: '#7da3e8',
+          borderWidth: 1,
+        },
+      ],
+    };
+    const chart_mostVotes = new Chart(document.getElementById(
+      'mostVotes') as HTMLCanvasElement, {
+      type: 'bar',
+      data: data_mostVotes,
+      options: {
+        responsive: true,
+        interaction: {
+          intersect: false,
+        },
+      },
     });
   }
 

@@ -1,0 +1,22 @@
+.masthead h1,
+.masthead .h1 {
+  font-family: "Yeyey", "Varela Round", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.3));
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.masthead h2,
+.masthead .h2 {
+  color: white !important;
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: max-content;
+  }
+}
+

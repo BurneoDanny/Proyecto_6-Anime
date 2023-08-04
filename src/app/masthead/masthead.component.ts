@@ -9,6 +9,7 @@ import { ServiceService } from '../providers/service.service';
 })
 export class MastheadComponent {
   public data: Anime[] = [];
+  public mastheadBg: string = '';
 
 
   constructor(private dataProvider: ServiceService) {}
@@ -16,21 +17,22 @@ export class MastheadComponent {
   ngOnInit() {
     this.dataProvider.getResponse().subscribe((response) => {
       this.data = response as Anime[];
-      this.changeBg();
+      setInterval(() => this.changeBg(), 15000);
     });
   }
 
   private changeBg() {
-      const images : string[] = [];
-      for(let i = 0; i < this.data.length ; i++){
-        images.push(this.data[i].anime_img);
-      }
 
       const masthead = document.getElementById("mastHead");
       if (masthead) {
-        const bg = images[Math.floor(Math.random() * images.length)];
-        console.log(bg);
-        masthead.style.background =  `url('${bg}')`;
+        const bg = this.data[Math.floor(Math.random() * this.data.length)].anime_img;
+        this.mastheadBg = `linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url('${bg}')`;
+
+        
+        //masthead.style.backgroundPosition = `center`;
+        //masthead.style.backgroundRepeat = `no-repeat`;
+        //masthead.style.backgroundAttachment = `scroll`;
+        //masthead.style.backgroundSize = `cover`;
       };
 
   }
