@@ -2,13 +2,9 @@ import { Component } from '@angular/core';
 import { Anime } from '../interfaces/root';
 import { ServiceService } from '../providers/service.service';
 
-import DataTable from 'datatables.net-dt';
 import 'datatables.net-bs5';
-import Chart from 'chart.js/auto';
-
-//import * as $ from 'jquery';
-//import 'bootstrap-table'; // Importa BootstrapTable
-//import 'bootstrap-table/dist/extensions/export/bootstrap-table-export'; // Importa la extensión de exportación
+import { Chart } from 'chart.js/auto';
+import DataTable from 'datatables.net-bs5';
 
 @Component({
   selector: 'app-about',
@@ -17,57 +13,39 @@ import Chart from 'chart.js/auto';
 })
 export class AboutComponent {
   public data: Anime[] = [];
-  public dataWithIndex: Anime[] = [];
+
+  //public valid_data: Anime[] = [];
+        // this.valid_data = this.data.filter((anime) => {
+      //   // Verifica si alguna propiedad tiene el valor "UNKNOWN"    
+      //   const values = Object.values(anime);
+      //   if (values.some((value) => value === "UNKNOWN")) {
+      //     return false; 
+      //   }
+      //   return true; 
+      // });
+
+  //public dataWithIndex: Anime[] = [];
+  // this.dataWithIndex = this.data.map((anime, index) => ({
+      //   ...anime,
+      //   index: index + 1,
+      // }));
 
   constructor(private dataProvider: ServiceService) {}
 
   ngOnInit() {
     this.dataProvider.getResponse().subscribe((response) => {
-      this.data = response as Anime[];
-      this.dataWithIndex = this.data.map((anime, index) => ({
-        ...anime,
-        index: index + 1,
-      }));
-      this.initializeTable(this.dataWithIndex);
-      this.initializeGraphs(this.dataWithIndex);
-    });
-  }
-
-  private initializeGraphs(data: Anime[]) {
-
-    // Top 10 Votes Graph
-
-    const top10Vote = data.slice().sort((a, b) => b.votes - a.votes).slice(0, 10);
-    const data_mostVotes = {
-      labels: top10Vote.map((row) => row.anime),
-      datasets: [
-        {
-          label: 'Top 10 con mas votos',
-          data: top10Vote.map((row) => row.votes),
-          backgroundColor: '#7da3e8',
-          borderWidth: 1,
-        },
-      ],
-    };
-    const chart_mostVotes = new Chart(document.getElementById(
-      'mostVotes') as HTMLCanvasElement, {
-      type: 'bar',
-      data: data_mostVotes,
-      options: {
-        responsive: true,
-        interaction: {
-          intersect: false,
-        },
-      },
+      this.data = response as Anime[];    
+      this.initializeTable(this.data);
+      this.initializeGraphs(this.data);
     });
   }
 
   private initializeTable(data: Anime[]) {
     const columns = [
-      { data: 'index', title: 'Índice' },
-      { data: 'anime' },
-      { data: 'rate' },
-      { data: 'votes' },
+      { data: 'Popularity'},
+      { data: 'Name' },
+      { data: 'Score'},
+      { data: 'Scored By'},
     ];
     new DataTable('#tabla', {
       data: data,
@@ -87,22 +65,36 @@ export class AboutComponent {
     });
   }
 
-  // Boostrap-table
-  // private initializeTable(data: Anime[]) {
-  //   const columns = [
-  //     { field: 'anime', title: 'Nombre' },
-  //     { field: 'rate', title: 'Puntuacion' },
-  //     { field: 'votes', title: 'Votos' },
-  //   ];
-  //   // Inicializar la tabla cuando se obtienen los datos
-  //   const $table = $('#table');
-  //   $table.bootstrapTable({
-  //     data: data,
-  //     columns: columns,
-  //     search: true,
-  //     pagination: true,
-  //   });
+  private initializeGraphs(data: Anime[]) {
+    // Top 10 Votes Graph
+    const top10Vote = data
+      .slice()
+      .sort((a, b) => parseInt(b["Scored By"]) - parseInt(a["Scored By"]))
+      .slice(0, 10);
+    const data_mostVotes = {
+      labels: top10Vote.map((row) => row.Name),
+      datasets: [
+        {
+          label: 'Top 10 con mas votos',
+          data: top10Vote.map((row) => row["Scored By"]),
+          backgroundColor: '#7da3e8',
+          borderWidth: 1,
+        },
+      ],
+    };
+    const chart_mostVotes = new Chart(
+      document.getElementById('mostVotes') as HTMLCanvasElement,
+      {
+        type: 'bar',
+        data: data_mostVotes,
+        options: {
+          responsive: true,
+          interaction: {
+            intersect: false,
+          },
+        },
+      }
+    );
+  }
 
-  //   $table.bootstrapTable('load', data);
-  // }
 }

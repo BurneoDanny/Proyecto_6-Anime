@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ServiceService {
 
-  private URL: string = 'https://crunchyroll-animes-default-rtdb.firebaseio.com/collection.json';
+  private URL: string = 'https://animedataset-default-rtdb.firebaseio.com/collection.json';
 
   constructor(private http:HttpClient) { 
     
