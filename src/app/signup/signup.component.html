@@ -18,105 +18,31 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-6">
+            <div
+              class="col-lg-4 col-md-6 col-sm-6"
+              *ngFor="let anime of displayedAnimes"
+            >
               <div class="product__item">
-                <div class="product__item__pic set-bg">
-                  <div class="ep"></div>
-                  <div class="score"><i class="fa fa-comments"></i></div>
-                  <div class="score_By"><i class="fa fa-eye"></i></div>
+                <div
+                  class="product__item__pic set-bg"
+                  [style.backgroundImage]="'url(' + anime['Image URL'] + ')'"
+                >
+                  <div class="ep">{{ anime.Episodes }} episode(s)</div>
+                  <div class="score">
+                    <i class="fa fa-comments"></i>{{ anime.Score }}
+                  </div>
+                  <div class="score_By">
+                    <i class="fa fa-eye"></i>{{ anime["Scored By"] }}
+                  </div>
                 </div>
                 <div class="product__item__text">
-                  <ul class="statusType_List">
-                    <li class="status"></li>
-                  </ul>
                   <h5>
-                    <a class="name" href="#"></a>
+                    <a>{{ anime.Name }}</a>
                   </h5>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6">
-              <div class="product__item">
-                <div class="product__item__pic set-bg">
-                  <div class="ep"></div>
-                  <div class="score"><i class="fa fa-comments"></i></div>
-                  <div class="score_By"><i class="fa fa-eye"></i></div>
-                </div>
-                <div class="product__item__text">
                   <ul class="statusType_List">
-                    <li class="status"></li>
+                    <li class="status">Status: {{ anime.Status }}</li>
+                    <li *ngFor="let genre of getGenres(anime)">{{ genre }}</li>
                   </ul>
-                  <h5>
-                    <a class="name" href="#"></a>
-                  </h5>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6">
-              <div class="product__item">
-                <div class="product__item__pic set-bg">
-                  <div class="ep"></div>
-                  <div class="score"><i class="fa fa-comments"></i></div>
-                  <div class="score_By"><i class="fa fa-eye"></i></div>
-                </div>
-                <div class="product__item__text">
-                  <ul class="statusType_List">
-                    <li class="status"></li>
-                  </ul>
-                  <h5>
-                    <a class="name" href="#"></a>
-                  </h5>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6">
-              <div class="product__item">
-                <div class="product__item__pic set-bg">
-                  <div class="ep"></div>
-                  <div class="score"><i class="fa fa-comments"></i></div>
-                  <div class="score_By"><i class="fa fa-eye"></i></div>
-                </div>
-                <div class="product__item__text">
-                  <ul class="statusType_List">
-                    <li class="status"></li>
-                  </ul>
-                  <h5>
-                    <a class="name" href="#"></a>
-                  </h5>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6">
-              <div class="product__item">
-                <div class="product__item__pic set-bg">
-                  <div class="ep"></div>
-                  <div class="score"><i class="fa fa-comments"></i></div>
-                  <div class="score_By"><i class="fa fa-eye"></i></div>
-                </div>
-                <div class="product__item__text">
-                  <ul class="statusType_List">
-                    <li class="status"></li>
-                  </ul>
-                  <h5>
-                    <a class="name" href="#"></a>
-                  </h5>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6">
-              <div class="product__item">
-                <div class="product__item__pic set-bg">
-                  <div class="ep"></div>
-                  <div class="score"><i class="fa fa-comments"></i></div>
-                  <div class="score_By"><i class="fa fa-eye"></i></div>
-                </div>
-                <div class="product__item__text">
-                  <ul class="statusType_List">
-                    <li class="status"></li>
-                  </ul>
-                  <h5>
-                    <a class="name" href="#"></a>
-                  </h5>
                 </div>
               </div>
             </div>

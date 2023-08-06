@@ -9,7 +9,7 @@ import { Anime } from '../interfaces/root';
 })
 export class ProjectsComponent {
   public data: Anime[] = [];
-  public top3Anime : Anime[] = [];
+  public top10Anime : Anime[] = [];
 
   constructor(private dataProvider: ServiceService) {}
 
@@ -17,7 +17,7 @@ export class ProjectsComponent {
     this.dataProvider.getResponse().subscribe((response) => {
       this.data = response as Anime[];
       
-      this.top3Anime = this.data.sort((a, b) => { return parseInt(a.Rank) - parseInt(b.Rank)}).slice(0, 10);
+      this.top10Anime = this.data.sort((a, b) => { return parseInt(a.Rank) - parseInt(b.Rank)}).slice(0, 10);
       this.generator();
     });
   }
@@ -28,9 +28,9 @@ export class ProjectsComponent {
     const description_elements = document.getElementsByClassName('descript') as HTMLCollectionOf<HTMLImageElement>;
 
     for (let i = 0; i < img_elements.length; i++) {
-      const bg = this.top3Anime[i]['Image URL'];
-      const titulo = this.top3Anime[i]['Name'];
-      const episodios = this.top3Anime[i]['Episodes'];
+      const bg = this.top10Anime[i]['Image URL'];
+      const titulo = this.top10Anime[i]['Name'];
+      const episodios = this.top10Anime[i]['Episodes'];
       img_elements[i].src = `${bg}`;
       title_elements[i].innerHTML = `${titulo}`;
       description_elements[i].innerHTML = `${episodios} Episodio(s)`;

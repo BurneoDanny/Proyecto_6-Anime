@@ -22,6 +22,31 @@
   src: url(./assets/fonts/Yeyey.otf);
 }
 
+
+
+.card-movies-series {
+    background-color: #FFF;
+    border-radius: 0.5rem !important;
+}
+
+.card-movies-series {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background: #fff;
+}
+
+.line {
+  height: 1px;
+  background-image: linear-gradient(90deg,rgba(0,0,0,0.00) 0%,#000000 50%,rgba(0,0,0,0.00) 100%);
+  opacity: .1;
+  width: 100%;
+}
+
 .image-column {
   display: flex;
   align-items: center;
@@ -106,7 +131,7 @@
 }
 
 .product__item__text h5 a {
-	color: #ffffff;
+	color: #ffffff !important;
 	font-weight: 700;
 	line-height: 26px;
 }
