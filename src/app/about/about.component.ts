@@ -4,7 +4,7 @@ import { ServiceService } from '../providers/service.service';
 
 import 'datatables.net-bs5';
 import { Chart } from 'chart.js/auto';
-import DataTable from 'datatables.net-bs5';
+import DataTable, { Api } from 'datatables.net-bs5';
 
 @Component({
   selector: 'app-about',
@@ -13,43 +13,32 @@ import DataTable from 'datatables.net-bs5';
 })
 export class AboutComponent {
   public data: Anime[] = [];
-
-  //public valid_data: Anime[] = [];
-        // this.valid_data = this.data.filter((anime) => {
-      //   // Verifica si alguna propiedad tiene el valor "UNKNOWN"    
-      //   const values = Object.values(anime);
-      //   if (values.some((value) => value === "UNKNOWN")) {
-      //     return false; 
-      //   }
-      //   return true; 
-      // });
-
-  //public dataWithIndex: Anime[] = [];
-  // this.dataWithIndex = this.data.map((anime, index) => ({
-      //   ...anime,
-      //   index: index + 1,
-      // }));
+  private isMobileView: boolean = false;
 
   constructor(private dataProvider: ServiceService) {}
 
   ngOnInit() {
+
     this.dataProvider.getResponse().subscribe((response) => {
       this.data = response as Anime[];    
       this.initializeTable(this.data);
       this.initializeGraphs(this.data);
     });
+
+  
   }
 
-  private initializeTable(data: Anime[]) {
+  private initializeTable(data: Anime[]){
     const columns = [
       { data: 'Popularity'},
       { data: 'Name' },
       { data: 'Score'},
       { data: 'Scored By'},
     ];
-    new DataTable('#tabla', {
+    const table = new DataTable('#tabla', {
       data: data,
       columns: columns,
+      columnDefs:[{className:"centered", targets:[0,1,2,3]}],
       pageLength: 10,
       language: {
         lengthMenu: 'Mostrar _MENU_ registros por página',
@@ -64,6 +53,9 @@ export class AboutComponent {
       },
     });
   }
+
+
+
 
   private initializeGraphs(data: Anime[]) {
     // Top 10 Votes Graph
