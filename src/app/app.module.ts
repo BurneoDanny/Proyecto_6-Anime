@@ -8,7 +8,6 @@ import { MastheadComponent } from './masthead/masthead.component';
 import { AboutComponent } from './about/about.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { SignupComponent } from './signup/signup.component';
-import { ContactComponent } from './contact/contact.component';
 import { FooterComponent } from './footer/footer.component';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -22,7 +21,6 @@ import { HttpClientModule } from '@angular/common/http';
     AboutComponent,
     ProjectsComponent,
     SignupComponent,
-    ContactComponent,
     FooterComponent,
   ],
   imports: [

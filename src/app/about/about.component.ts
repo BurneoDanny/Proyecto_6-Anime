@@ -13,32 +13,28 @@ import DataTable, { Api } from 'datatables.net-bs5';
 })
 export class AboutComponent {
   public data: Anime[] = [];
-  private isMobileView: boolean = false;
 
   constructor(private dataProvider: ServiceService) {}
 
   ngOnInit() {
-
     this.dataProvider.getResponse().subscribe((response) => {
-      this.data = response as Anime[];    
+      this.data = response as Anime[];
       this.initializeTable(this.data);
       this.initializeGraphs(this.data);
     });
-
-  
   }
 
-  private initializeTable(data: Anime[]){
+  private initializeTable(data: Anime[]) {
     const columns = [
-      { data: 'Popularity'},
+      { data: 'Popularity' },
       { data: 'Name' },
-      { data: 'Score'},
-      { data: 'Scored By'},
+      { data: 'Score' },
+      { data: 'Scored By' },
     ];
     const table = new DataTable('#tabla', {
       data: data,
       columns: columns,
-      columnDefs:[{className:"centered", targets:[0,1,2,3]}],
+      columnDefs: [{ className: 'centered', targets: [0, 1, 2, 3] }],
       pageLength: 10,
       language: {
         lengthMenu: 'Mostrar _MENU_ registros por página',
@@ -54,21 +50,18 @@ export class AboutComponent {
     });
   }
 
-
-
-
   private initializeGraphs(data: Anime[]) {
     // Top 10 Votes Graph
-    const top10Vote = data
-      .slice()
-      .sort((a, b) => parseInt(b["Scored By"]) - parseInt(a["Scored By"]))
-      .slice(0, 10);
+    const top10Voted = data
+    .slice()
+    .sort((a, b) => parseInt(b['Scored By']) - parseInt(a['Scored By']))
+    .slice(0, 10);
     const data_mostVotes = {
-      labels: top10Vote.map((row) => row.Name),
+      labels: top10Voted.map((row) => row.Name),
       datasets: [
         {
-          label: 'Top 10 con mas votos',
-          data: top10Vote.map((row) => row["Scored By"]),
+          label: 'Los mas votos',
+          data: top10Voted.map((row) => row['Scored By']),
           backgroundColor: '#7da3e8',
           borderWidth: 1,
         },
@@ -87,6 +80,33 @@ export class AboutComponent {
         },
       }
     );
-  }
 
+    // chart_Votes
+    const top10Anime = data
+      .slice()
+      .sort((a, b) => parseInt(a['Rank']) - parseInt(b['Rank']))
+      .slice(0, 10);
+    const dataset = {
+      labels: top10Anime.map((row) => row["Name"]),
+      datasets: [
+        {
+          label: "Top 10 Animes",
+          data: top10Anime.map((row) => row['Score']),
+          fill: false,
+          borderColor: "rgb(75, 192, 192)",
+          tension: 0.1,
+        },
+      ],
+    };
+
+    const chart_ratingPopularity = new Chart(
+      document.getElementById('bestAnimes') as HTMLCanvasElement,
+      {
+        type: 'line',
+        data: dataset,
+        options: {}
+        
+      });
+
+  }
 }
